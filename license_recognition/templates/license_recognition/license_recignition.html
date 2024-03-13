@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>License plate 2</title>
+    <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %}>
+    <link rel="stylesheet" href={% static 'fonts/material-icons.min.css' %}>
+    <link rel="stylesheet" href={% static 'css/Perfect-navigation-bar.css' %}>
+    <link rel="stylesheet" href={% static 'css/Responsive-Active-Navbar.css' %}>
+    <link rel="stylesheet" href={% static 'css/Sidebar-Menu-sidebar.css' %}>
+    <link rel="stylesheet" href={% static 'css/sticky-dark-top-nav-1.css' %}>
+    <link rel="stylesheet" href={% static 'css/sticky-dark-top-nav.css' %}>
+    <link rel="stylesheet" href={% static 'css/untitled-1.css' %}>
+    <link rel="stylesheet" href={% static 'css/untitled.css' %}>
+</head>
+
+<body>
+{#    <nav class="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button">#}
+{#        <div class="container">#}
+{#            <div><a class="navbar-brand" href="#"><span style="margin-left: -86px;margin-right: 0px;padding-left: 0px;padding-right: 0px;">PLATE RECOGNIZER</span> </a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>#}
+{#            <div class="collapse navbar-collapse" id="navcol-1" style="padding-bottom: 0px;">#}
+{#                <ul class="navbar-nav nav-right">#}
+{#                    <li class="nav-item"><a class="nav-link active" href="index.html"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-textarea-t" style="font-size: 17px;padding-top: 1px;margin-top: -4px;position: relative;">#}
+{#                                <path d="M1.5 2.5A1.5 1.5 0 0 1 3 1h10a1.5 1.5 0 0 1 1.5 1.5v3.563a2 2 0 0 1 0 3.874V13.5A1.5 1.5 0 0 1 13 15H3a1.5 1.5 0 0 1-1.5-1.5V9.937a2 2 0 0 1 0-3.874V2.5zm1 3.563a2 2 0 0 1 0 3.874V13.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V9.937a2 2 0 0 1 0-3.874V2.5A.5.5 0 0 0 13 2H3a.5.5 0 0 0-.5.5v3.563zM2 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm12 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>#}
+{#                                <path d="M11.434 4H4.566L4.5 5.994h.386c.21-1.252.612-1.446 2.173-1.495l.343-.011v6.343c0 .537-.116.665-1.049.748V12h3.294v-.421c-.938-.083-1.054-.21-1.054-.748V4.488l.348.01c1.56.05 1.963.244 2.173 1.496h.386L11.434 4z"></path>#}
+{#                            </svg><strong>Recognize</strong></a></li>#}
+{#                    <li class="nav-item"><a class="nav-link" href="contact.html"><i class="material-icons" style="font-size: 14px;margin-top: 1px;">history</i><strong>License plate</strong></a></li>#}
+{#                </ul>#}
+{#                <p class="ms-auto navbar-text actions" style="padding-top: 0px;margin-bottom: 3px;"> </p><span class="navbar-text">Text</span><button class="btn btn-primary" type="button">Button</button>#}
+{#            </div>#}
+{#        </div>#}
+{#    </nav>#}
+<nav class="navbar navbar-dark navbar-expand-md sticky-top shadow-lg"
+     style="color: rgb(47,110,207);opacity: 1;background: rgb(48,112,211);">
+    <div class="container">
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-1"
+                style="background-color: rgb(255,255,255);color: #ffffff;"><span class="visually-hidden">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <a class="navbar-brand navbar-logo" href="#" style="font-weight: bold;margin-left: -216px;">PLATE RECOGNIZER</a><a
+            class="nav-link" href="{% url 'license_recognition' %}"
+            style="margin-right: 1px;color: rgb(255,255,255);"><i
+            class="fa fa-search fas fa-tachometer-alt" style="font-size: 18px;"></i> Recognize</a><a class="nav-link"
+                                                                                                     href="{% url 'license_plate_table' %}"
+                                                                                                     style="margin-left: 43px;color: rgb(255,255,255);margin-right: -3px;"><i
+            class="fa fa-drivers-license-o far fa-address-book" style="font-size: 18px;"></i> License plate</a>
+        <div id="navcol-1" class="collapse navbar-collapse"
+             style="color: rgb(255,255,255);background-color: rgb(255,255,255);"></div>
+        <div class="dropdown">
+            <button class="btn btn-primary" type="button" id="user_dropdown"
+                    style="background-color: rgba(221,231,248, 0);margin-right: -226px;border-color: rgba(221,231,248, 0)">Settings</button>
+            <div class="dropdown-options">
+                <a href="{% url 'profile_settings' %}">Profile</a>
+                <a href="{% url 'sign_in' %}">Log out</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<script src={% static 'js/Responsive-Active-Navbar.js' %}></script>
+{% if path_to_file %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <img src="{{ path_to_file }}" alt="Uploaded image" class="img-fluid" style="background-position: center; ">
+        </div>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div id="sidebar-wrapper"
+             style="background: rgba(188,217,213,0.81);border-radius: 0;border-top-right-radius: 20px;border-bottom-right-radius: 20px;display: inline;margin: -300px 694px;height: 500px;border-top-left-radius: 20px;border-bottom-left-radius: 20px;">
+            <div class="container"
+                 style="background: #92d3d7;height: 310px;width: 240px;border-radius: 30px;margin-top: 26px;">
+                <div class="row">
+                    <div class="col-md-12 offset-xl-1" style="width: 202px;text-align: center;"><span
+                            style="font-size: 19px;">Recognition result</span></div>
+                    <div class="col" style="margin-top: 7px;"><span style="font-size: 14px;">Licence plate</span></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"><input type="text"
+                                                  style="border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;margin: 0px;font-size: 18px;"
+                                                  name="lic_plate" value="{% if rec_res %}{{ rec_res }}{% endif %}">
+                    </div>
+                    <div class="col" style="margin-top: 7px;"><span style="font-size: 14px;">Region</span></div>
+                    <div class="col"><input type="text"
+                                            style="border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;margin: 0px;font-size: 18px;"
+                                            name="region"></div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col" style="margin-top: 7px;"><span style="font-size: 14px;">Owner</span></div>
+                            <div class="col"><input type="text"
+                                                    style="border-radius: 20px;border-top-left-radius: 20px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;border-bottom-left-radius: 20px;margin: 0px;font-size: 18px;"
+                                                    name="owner"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit"
+                        style="border-radius: 20px;height: 39px;margin: 38px 0px 0px;background: var(--bs-body-bg);color: rgb(0,0,0);border-color: rgb(0,0,0);"
+                        name="add_owner">Add owner
+                </button>
+            </div>
+            <button class="btn btn-primary" type="submit"
+                    style="border-radius: 20px;height: 39px;margin: 100px 21px 0px;background: var(--bs-body-bg);color: rgb(0,0,0);border-color: rgb(0,0,0);"
+                    name="save">Save result
+            </button>
+        </div>
+    </form>
+{% else %}
+    <div data-bss-parallax-bg="true"
+         style="height: 700px;background-image: url(https://cdn.bootstrapstudio.io/placeholders/1400x800.png);background-position: center;background-size: cover;transform: scale(0.42);"></div>
+
+{% endif %}
+
+{#    <div data-bss-parallax-bg="true" style="height: 700px;background-image: url(https://cdn.bootstrapstudio.io/placeholders/1400x800.png);background-position: center;background-size: cover;transform: scale(0.42);"></div>#}
+<div style="position: relative;">
+    {#  <img src="{% if path_to_file %}{{ path_to_file }}{% endif %}" style="position: relative; z-index: 1;" alt="">#}
+    <div style="position: absolute; top: -600px; left: 300px; z-index: 0; height: 104px; background: rgba(188,217,213,0.81); margin: 463px 310px 0px; width: 387px; border-radius: 20px; transform: translate(38px);">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label class="btn btn-primary"
+                   style="display:inline-block;border-radius: 20px;height: 39px;margin: 12px 24px 0px;background: var(--bs-body-bg);color: rgb(0,0,0);border-color: rgb(0,0,0);"><input
+                    type="file" name="image"></label>
+            <button class="btn btn-primary" type="submit"
+                    style="border-radius: 20px;height: 39px;margin: 12px 72px 0px;background: var(--bs-body-bg);color: rgb(0,0,0);border-color: rgb(0,0,0);transform: translate(49px);"
+                    name="upload_photo">Recognize
+            </button>
+        </form>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" style="width: 148px;">
+            <div id="wrapper"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

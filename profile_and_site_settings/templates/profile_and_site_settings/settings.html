@@ -1,0 +1,302 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Settings</title>
+    <link rel="stylesheet" href={% static "css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href={% static "css/Dark-Mode-Switch.css" %}>
+    <link rel="stylesheet" href={% static "css/Dynamic-Table.css" %}>
+    <link rel="stylesheet" href={% static "fonts/font-awesome.min.css" %}>
+    <link rel="stylesheet" href={% static "css/Perfect-navigation-bar.css" %}>
+    <link rel="stylesheet" href={% static "css/Responsive-Active-Navbar.css" %}>
+    <link rel="stylesheet" href={% static "css/Sidebar-Menu-sidebar.css" %}>
+    <link rel="stylesheet" href={% static "css/sticky-dark-top-nav-1.css" %}>
+    <link rel="stylesheet" href={% static "css/sticky-dark-top-nav.css" %}>
+    <link rel="stylesheet" href={% static "css/untitled-1.css" %}>
+    <link rel="stylesheet" href={% static "css/untitled.css" %}>
+    <link rel="stylesheet" href={% static "css/user_dropdown.css" %}>
+</head>
+
+<body>
+{#<nav class="navbar navbar-dark navbar-expand-md sticky-top shadow-lg"#}
+{#     style="color: rgb(47,110,207);opacity: 1;background: rgb(48,112,211);">#}
+{#    <div class="container">#}
+{#        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"#}
+{#                style="background-color: rgb(255,255,255);color: #ffffff;"><span class="visually-hidden">Toggle navigation</span><span#}
+{#                class="navbar-toggler-icon"></span></button>#}
+{#        <a class="navbar-brand navbar-logo" href="#" style="font-weight: bold;margin-left: -216px;">PLATE RECOGNIZER</a><a#}
+{#            class="nav-link" href="javascript:void(0);" style="margin-right: 1px;color: rgb(255,255,255);"><i#}
+{#            class="fa fa-search fas fa-tachometer-alt" style="font-size: 18px;"></i>Recognize</a><a class="nav-link"#}
+{#                                                                                                    href="javascript:void(0);"#}
+{#                                                                                                    style="margin-left: 43px;color: rgb(255,255,255);margin-right: -3px;"><i#}
+{#            class="fa fa-drivers-license-o far fa-address-book" style="font-size: 18px;"></i>License plate</a>#}
+{#        <div class="collapse navbar-collapse" id="navcol-1"#}
+{#             style="color: rgb(255,255,255);background-color: rgb(255,255,255);"></div>#}
+{#        <a class="nav-link" href="javascript:void(0);"#}
+{#           style="color: rgb(221,231,248);margin-right: -226px;">{{ user_info.username }}#}
+{#            &nbsp;<button class="btn btn-primary" type="button"#}
+{#                          style="width: 40px;height: 40px;border-radius: 360px;background: rgb(194,200,208);"><i#}
+{#                    class="fa fa-user" style="color: rgb(0,0,0);font-size: 20px;"></i></button>&nbsp;</a>#}
+{#    </div>#}
+{#</nav>#}
+<nav class="navbar navbar-dark navbar-expand-md sticky-top shadow-lg"
+     style="color: rgb(47,110,207);opacity: 1;background: rgb(48,112,211);">
+    <div class="container">
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-1"
+                style="background-color: rgb(255,255,255);color: #ffffff;"><span class="visually-hidden">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <a class="navbar-brand navbar-logo" href="#" style="font-weight: bold;margin-left: -216px;">PLATE RECOGNIZER</a><a
+            class="nav-link" href="{% url 'license_recognition' %}"
+            style="margin-right: 1px;color: rgb(255,255,255);"><i
+            class="fa fa-search fas fa-tachometer-alt" style="font-size: 18px;"></i> Recognize</a><a class="nav-link"
+                                                                                                     href="{% url 'license_plate_table' %}"
+                                                                                                     style="margin-left: 43px;color: rgb(255,255,255);margin-right: -3px;"><i
+            class="fa fa-drivers-license-o far fa-address-book" style="font-size: 18px;"></i> License plate</a>
+        <div id="navcol-1" class="collapse navbar-collapse"
+             style="color: rgb(255,255,255);background-color: rgb(255,255,255);"></div>
+        <div class="dropdown">
+            <button class="btn btn-primary" type="button" id="user_dropdown"
+                    style="background-color: rgba(221,231,248, 0);margin-right: -226px;border-color: rgba(221,231,248, 0)">
+                Settings
+            </button>
+            <div class="dropdown-options">
+                <a href="{% url 'profile_settings' %}">Profile</a>
+                <a href="{% url 'sign_in' %}">Log out</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<main class="page payment-page">
+    <section class="clean-block payment-form dark">
+        <div class="container-fluid">
+            <h3 class="text-dark mb-4" style="height: 26.5938px;margin: 13px;font-size: 34px;margin-left: 15px;">
+                Profile</h3>
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row" style="margin-bottom: 25px;text-align: left;">
+                            <div class="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-12 align-self-center">
+                                <div class="row">
+                                    <div class="col-md-12 text-start">
+                                        <div class="mb-3"><label class="form-label" for="email"><strong>Email
+                                            Address</strong></label><input class="form-control" type="email" id="email"
+                                                                           placeholder="User@example.com"
+                                                                           name="email_profile"
+                                                                           required=""></div>
+                                    </div>
+                                    <div class="col-md-12 text-start">
+                                        <div class="mb-3"><label class="form-label"
+                                                                 for="username"><strong>Username</strong></label><input
+                                                class="form-control" type="text" placeholder="Username"
+                                                name="username_profile"
+                                                required=""></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-start">
+                                <div class="mb-3"><label class="form-label"
+                                                         for="password"><strong>Password</strong></label><input
+                                        class="form-control" type="password" id="password" placeholder="Password"
+                                        name="password_profile"></div>
+                            </div>
+                            <div class="col-md-6 text-start">
+                                <div class="mb-3"><label class="form-label" for="confirm_password"><strong>Confirm
+                                    Password</strong></label><input class="form-control" type="password"
+                                                                    id="verifyPassword" placeholder="Password"
+                                                                    name="confirm_password_profile"></div>
+                            </div>
+                            <div class="col">
+                                <p id="emailErrorMsg" class="text-danger" style="display:none;"></p>
+                                <p id="passwordErrorMsg" class="text-danger" style="display:none;"></p>
+                            </div>
+                            <div class="col-md-12" style="text-align: right;margin-top: 5px;">
+                                <button class="btn btn-primary btn-sm" id="submitBtn" type="submit" name="profile_save">
+                                    Save Settings
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <form>
+                {% csrf_token %}
+                <div class="card-details"></div>
+            </form>
+        </div>
+    </section>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card" style="margin-left: 10px;margin-right: 10px;padding-bottom: 0px;margin-bottom: 14px;">
+            <div class="card-body" style="margin-left: -2px;margin-right: -2px;">
+                <h4 class="card-title">Car list</h4>
+                <p class="card-text">Press "Add transport" button to add new car to list.</p>
+                <div class="dynamic-table">
+                    <div class="row clearfix">
+                        <div class="col-md-12 column">
+                            <table class="table table-bordered table-hover dynamic-table-tab_logic">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        Model
+                                    </th>
+                                    <th class="text-center">
+                                        License plate
+                                    </th>
+                                    <th class="text-center">
+                                        Region
+                                    </th>
+                                </tr>
+                                {% for item in plate_list %}
+                                    <tr>
+                                        <td>{{ item.car_model }}</td>
+                                        <td>{{ item.license_plate }}</td>
+                                        <td>{{ item.region }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                <tr>
+                                    <th class="text-center">
+                                        <input type="text" name='model_license_plates' placeholder='Model'
+                                               class="form-control"/>
+                                    </th>
+                                    <th class="text-center">
+                                        <input type="text" name='license_plate_license_plates'
+                                               placeholder='License plate'
+                                               class="form-control"/>
+                                    </th>
+                                    <th class="text-center">
+                                        <input type="text" name='region_license_plates' placeholder='Region'
+                                               class="form-control"/>
+                                    </th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <button class="dynamic-table-delete_row pull-right btn btn-default" name="delete_license_plate">
+                        Delete Row
+                    </button>
+                </div>
+                <button class="btn btn-primary" type="submit" name="add_license_plate" style="margin-left: 1156px;">Add
+                    transport
+                </button>
+            </div>
+        </div>
+    </form>
+    <span style="font-size: 34px;padding-top: 4px;"></span>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr style="color: rgb(255,255,255);">
+                <th>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="card"
+                             style="margin-left: 10px;margin-right: 10px;width: 650px;margin-bottom: 19px;">
+                            <div class="card-body" style="margin-left: -2px;margin-right: -2px;">
+                                <h4 class="card-title" style="color: rgb(33,37,41);">Notification</h4>
+                                {#                                <input type="checkbox"><span style="color: var(--bs-table-color);margin-left: 4px;">Notify about new features</span>#}
+                                <p style="margin-top: 15px;margin-bottom: 16px;"><input type="checkbox"
+                                                                                        name="new_features"><span
+                                        style="color: var(--bs-table-color);margin-left: 4px;">Notify about new features</span>Paragraph
+                                </p>
+                                <p style="margin-top: 15px;margin-bottom: 16px;"><input type="checkbox"
+                                                                                        name="my_license_plate_on_photo"><span
+                                        style="color: var(--bs-table-color);margin-left: 4px;">Notify when my license plate on photo</span>Paragraph
+                                </p>
+                                <p><input type="checkbox" name="white_list_license_plate_on_photo"><span
+                                        style="color: var(--bs-table-color);margin-top: 3px;margin-left: 4px;">Notify when license plate from white list on photo</span>Paragraph
+                                </p>
+                                <p><input type="checkbox" name="unfamiliar_license_plate_on_photo"><span
+                                        style="color: var(--bs-table-color);margin-left: 4px;">Notify when unfamiliar license plate on photo</span>Paragraph
+                                </p>
+                                <button class="btn btn-primary" type="submit" name="checkbox_submit"
+                                        style="margin-left: 565px;">Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </th>
+                <th>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="card" style="margin-left: 10px;margin-right: 10px;width: 650px;">
+                            <div class="card-body" style="margin-left: -2px;margin-right: -2px;">
+                                <h4 class="card-title" style="color: var(--bs-table-color);">White list</h4>
+                                <p class="card-text" style="color: rgb(31, 37, 41);">Press "Add user" button to add new
+                                    user to list.</p>
+                                <div class="dynamic-table">
+                                    <div class="row clearfix">
+                                        <div class="col-md-12 column">
+                                            <table class="table table-bordered table-hover dynamic-table-tab_logic">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">
+                                                        Username
+                                                    </th>
+                                                    <th class="text-center">
+                                                        License plate
+                                                    </th>
+                                                </tr>
+                                                {% for item in white_list %}
+                                                    <tr>
+                                                        <td>{{ item.user_name }}</td>
+                                                        <td>{{ item.license_plate }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                <tr>
+                                                    <th class="text-center">
+                                                        <input type="text" name='user_name_white_list'
+                                                               placeholder='User'
+                                                               class="form-control"/>
+                                                    </th>
+                                                    <th class="text-center">
+                                                        <input type="text" name='license_plate_white_list'
+                                                               placeholder='License plate'
+                                                               class="form-control"/>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <button class="dynamic-table-delete_row pull-right btn btn-default"
+                                            name="delete_white_list">
+                                        Delete Row
+                                    </button>
+                                </div>
+                                <div class="table-responsive" style="margin-left: 70px;margin-right: 70px;">
+                                    <table class="table">
+                                        <thead>
+                                        <tr></tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <button class="btn btn-primary" type="submit" name="white_list"
+                                        style="margin-left: 420px;">Add user
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</main>
+<script src={% static "/bootstrap/js/bootstrap.min.js" %}></script>
+<script src={% static "/js/Dark-Mode-Switch.js" %}></script>
+<script src={% static "/js/Dynamic-Table-1.js" %}></script>
+<script src={% static "/js/Dynamic-Table.js" %}></script>
+<script src={% static "/js/Responsive-Active-Navbar.js" %}></script>
+</body>
+
+</html>

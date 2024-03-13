@@ -1,0 +1,8 @@
+tbody, td, tfoot, th, thead, tr {
+  /*border-style: solid;*/
+  border-bottom: 1px solid #77818c;
+  border-left: 1px solid #77818c;
+  border-right: 1px solid #77818c;
+  border-top: 1px solid #77818c;
+}
+

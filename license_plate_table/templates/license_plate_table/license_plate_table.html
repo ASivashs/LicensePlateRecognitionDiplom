@@ -1,0 +1,176 @@
+{% load custom_tag %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="EN" style="height: auto;width: auto;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>History page</title>
+    <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %}>
+    <link rel="stylesheet" href={% static 'fonts/material-icons.min.css' %}>
+    <link rel="stylesheet" href={% static 'css/Sidebar-Menu-sidebar.css' %}>
+    <link rel="stylesheet" href={% static 'css/sticky-dark-top-nav-1.css' %}>
+    <link rel="stylesheet" href={% static 'css/sticky-dark-top-nav.css' %}>
+    <link rel="stylesheet" href={% static 'css/table_set.css' %}>
+    <link rel="stylesheet" href={% static 'css/border_table_set.css' %}>
+    <link rel="stylesheet" href={% static 'css/Perfect-navigation-bar.css' %}>
+    <link rel="stylesheet" href={% static 'css/Perfect-navigation-bar.css' %}>
+    <link rel="stylesheet" href={% static 'css/user_dropdown.css' %}>
+    <link rel="stylesheet" href={% static "fonts/font-awesome.min.css" %}>
+</head>
+
+<body style="width: auto;height: auto;min-height: 715px;">
+<nav class="navbar navbar-dark navbar-expand-md sticky-top shadow-lg"
+     style="color: rgb(47,110,207);opacity: 1;background: rgb(48,112,211);">
+    <div class="container">
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-1"
+                style="background-color: rgb(255,255,255);color: #ffffff;"><span class="visually-hidden">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <a class="navbar-brand navbar-logo" href="#" style="font-weight: bold;margin-left: -216px;">PLATE RECOGNIZER</a><a
+            class="nav-link" href="{% url 'license_recognition' %}"
+            style="margin-right: 1px;color: rgb(255,255,255);"><i
+            class="fa fa-search fas fa-tachometer-alt" style="font-size: 18px;"></i>  Recognize</a><a class="nav-link"
+                                                                                                    href="{% url 'license_plate_table' %}"
+                                                                                                    style="margin-left: 43px;color: rgb(255,255,255);margin-right: -3px;"><i
+            class="fa fa-drivers-license-o far fa-address-book" style="font-size: 18px;"></i>  License plate</a>
+        <div id="navcol-1" class="collapse navbar-collapse"
+             style="color: rgb(255,255,255);background-color: rgb(255,255,255);"></div>
+        <div class="dropdown">
+            <button class="btn btn-primary" type="button" id="user_dropdown"
+                    style="background-color: rgba(221,231,248, 0);margin-right: -226px;border-color: rgba(221,231,248, 0)">Settings
+            </button>
+            <div class="dropdown-options">
+                <a href="{% url 'profile_settings' %}">Profile</a>
+                <a href="{% url 'sign_in' %}">Log out</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<script src={% static 'js/Responsive-Active-Navbar.js' %}></script>
+<div class="container">
+    <div class="row">
+        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'license_plate_search_view' %}">
+            {% csrf_token %}
+            <div class="col-md-6" style="width: 148px;">
+                <div id="wrapper">
+                    <div id="sidebar-wrapper"
+                         style="background: rgba(188,217,213,0.81);border-top-right-radius: 20px;border-bottom-right-radius: 20px;display: inline;">
+                        <div class="container">
+                            <div class="col-xl-9" style="text-align: left;"><span
+                                    style="font-size: 40px;text-align: left;"><i
+                                    class="material-icons"
+                                    style="font-size: 27px;">search</i><strong>Search</strong></span>
+                            </div>
+                        </div>
+                        <div class="container" style="margin-bottom: 0px;margin-top: 10px;">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: left;"><input type="text"
+                                                                                        name="search_license_name"
+                                                                                        style="width: 225px;border-color: rgb(255,255,255);border-top-color: rgba(255,255,255,0);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgba(255,255,255,0);border-radius: 30px;font-size: 15px;text-align: center;--bs-light: #ffffff;--bs-light-rgb: 255,255,255;--bs-body-bg: #fff;height: 41px;margin-top: 18px;margin-right: 0px;margin-bottom: 20px;"
+                                                                                        placeholder="License plate">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <select title="text" name="select_region" class="dropdown"
+                                            style="color: rgb(208,202,202);background: rgb(255,255,255);border-color: rgb(255,255,255);border-left-color: rgb(255,255,255);border-radius: 30px;height: 41px;line-height: 1px;text-align: center;width: 225px;">
+                                        <option value="" disabled selected>Region</option>
+                                        <option value="RU">RU</option>
+                                        <option value="BY">BY</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container"
+                             style="background: #92d3d7;height: 201px;width: 240px;border-radius: 30px;margin-top: 26px;">
+                            <div class="row">
+                                <div class="col-md-12 offset-xl-1" style="width: 202px;text-align: center;"><span
+                                        style="font-size: 19px;">Date range</span></div>
+                                <div class="col" style="margin-top: 7px;"><span
+                                        style="font-size: 14px;">Start date</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"><input name="start_date" type="date"
+                                                              style="width: 220px;height: 41px;border-radius: 30px;border-color: rgb(255,255,255);border-top-color: rgba(255,255,255,0);border-left-color: rgba(255,255,255,0);text-align: center;">
+                                </div>
+                                <div class="col" style="margin-top: 7px;"><span
+                                        style="font-size: 14px;">Fixed date</span>
+                                </div>
+                                <div class="col"><input name="end_date" type="date"
+                                                        style="width: 220px;height: 41px;border-radius: 30px;border-color: rgb(255,255,255);border-top-color: rgba(255,255,255,0);border-left-color: rgba(255,255,255,0);text-align: center;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container" style="margin-bottom: 0px;margin-top: 10px;">
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: left;"><input name="user_name" type="text"
+                                                                                        style="width: 225px;border-color: rgb(255,255,255);border-top-color: rgba(255,255,255,0);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgba(255,255,255,0);border-radius: 30px;font-size: 15px;text-align: center;--bs-light: #ffffff;--bs-light-rgb: 255,255,255;--bs-body-bg: #fff;height: 41px;margin-top: 18px;margin-right: 0px;margin-bottom: 20px;"
+                                                                                        placeholder="User name"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <select title="text" name="select_source" class="dropdown"
+                                            style="color: rgb(208,202,202);background: rgb(255,255,255);border-color: rgb(255,255,255);border-left-color: rgb(255,255,255);border-radius: 30px;height: 41px;line-height: 1px;text-align: center;width: 225px;">
+                                        <option value="" disabled selected>Source</option>
+                                        <option value="Image">Image</option>
+                                        <option value="Video">Video</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <button id="search_button_main" class="btn btn-primary" type="submit"
+                                    style="width: 225px;height: 50px;background: rgb(35,197,232);border-radius: 30px;margin-top: 25px;">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-11 offset-xl-1" style="margin-left: 0;"><span
+                    style="font-size: 26px;">License plate</span>
+            </div>
+            <div class="col-xl-11 offset-xl-1" style="margin-left: 0;">
+                <div class="table-responsive"
+                     style="border-radius: 2px;border-collapse: collapse;min-height: 510px;">
+                    <table class="table">
+                        <thead style="background: #e4dfdf;border-style: solid;border-color: #77818c;">
+                            <tr>
+                                {% for column in columns %}
+                                    <th>{{ column }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in license_plate %}
+                            <tr>
+                                {% for column in columns %}
+                                    {% dynamic_view column item as data %}
+                                    {% if column == "field_name" %}
+                                        {% remove_path data.url as path %}
+                                        <td><img src="{% static path %}" style="width:70%" alt="license plate"></td>
+                                    {% else %}
+                                        <td>{{ data }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xl-9 offset-xl-2" style="margin-left: 0;">
+                <label><input id="query_search" type="text" name="query_search"
+                              style="width: 1020px;border-radius: 30px;font-size: 15px;text-align: center;--bs-light: #ffffff;--bs-light-rgb: 255,255,255;--bs-body-bg: #fff;height: 60px;margin-top: 18px;margin-right: 0px;margin-bottom: 20px;border-style: solid;border-color: var(--bs-red);border-top-color: rgb(0,0,0);border-right-color: rgb(0,0,0);border-bottom-color: rgb(0,0,0);border-left-color: rgb(0,0,0);"
+                              placeholder="Query search"></label>
+            </div>
+        </form>
+    </div>
+</div>
+<script src={% static 'js/bootstrap.min.js' %}></script>
+</body>
+
+</html>
