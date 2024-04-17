@@ -19,50 +19,63 @@ import sys
 # if sys.platform == 'win32':
 #     pytesseract.pytesseract.tesseract_cmd = r'D:\\Programs\\Tesseract\\tesseract.exe'
 
+
 def view_license_recognition(request):
-    if 'upload_photo' in request.POST:
-        if image := request.FILES.get('image', False):
-            print(request.FILES.get('image'))
-            save_photo('license_recognition/static/image', image)
-            recognition_result = number_finder(f'license_recognition/static/image/{image.name}')
+    if "upload_photo" in request.POST:
+        if image := request.FILES.get("image", False):
+            print(request.FILES.get("image"))
+            save_photo("license_recognition/static/image", image)
+            recognition_result = number_finder(
+                f"license_recognition/static/image/{image.name}"
+            )
             new_license_plate = License_plate()
             new_license_plate.license_plate = recognition_result
-            new_license_plate.region = 'BY'
+            new_license_plate.region = "BY"
             new_license_plate.date_time = datetime.now()
-            new_license_plate.user_name = '-'
-            new_license_plate.source = 'image'
-            image_data = open(f"license_recognition/static/image/{image.name}", "rb").read()
-            new_license_plate.field_name = SimpleUploadedFile(name=f"{image.name}", content=image_data, )
+            new_license_plate.user_name = "-"
+            new_license_plate.source = "image"
+            image_data = open(
+                f"license_recognition/static/image/{image.name}", "rb"
+            ).read()
+            new_license_plate.field_name = SimpleUploadedFile(
+                name=f"{image.name}",
+                content=image_data,
+            )
             new_license_plate.save()
-            return render(request, 'license_recognition/license_recignition.html',
-                          {'rec_res': recognition_result,
-                           'path_to_file': f'/static/image/{image.name}'})
-    if 'add_owner' in request.POST:
-        lic_plate = request.POST.get('lic_plate', 'unknown')
-        region = request.POST.get('region', 'BY')
-        owner = request.POST.get('owner', 'unknown')
+            return render(
+                request,
+                "license_recognition/license_recignition.html",
+                {
+                    "rec_res": recognition_result,
+                    "path_to_file": f"/static/image/{image.name}",
+                },
+            )
+    if "add_owner" in request.POST:
+        lic_plate = request.POST.get("lic_plate", "unknown")
+        region = request.POST.get("region", "BY")
+        owner = request.POST.get("owner", "unknown")
         white_list = WhiteList()
         white_list.license_plate = lic_plate
         white_list.user_name = owner
         white_list.save()
-    if 'save' in request.POST:
-        lic_plate = request.POST.get('lic_plate', 'unknown')
-        region = request.POST.get('region', 'BY')
-        owner = request.POST.get('owner', 'unknown')
+    if "save" in request.POST:
+        lic_plate = request.POST.get("lic_plate", "unknown")
+        region = request.POST.get("region", "BY")
+        owner = request.POST.get("owner", "unknown")
         # load_json(lic_plate, region, owner)
         json_save_one(lic_plate, region, owner)
         # Открываем файл JSON на запись
         return download_file()
 
-    return render(request, 'license_recognition/license_recignition.html')
+    return render(request, "license_recognition/license_recignition.html")
 
 
 def number_finder(image_name: str):
     """
-        Detect license plate and convert license plate number to image.
-        :arg1: img path.
-        :return: tuple with image name and responsed number or None.
-        """
+    Detect license plate and convert license plate number to image.
+    :arg1: img path.
+    :return: tuple with image name and responsed number or None.
+    """
 
     img = cv2.imread(image_name, cv2.IMREAD_COLOR)
     img = cv2.resize(img, (600, 400))
@@ -101,9 +114,9 @@ def number_finder(image_name: str):
     (x, y) = np.where(mask == 255)
     (topx, topy) = (np.min(x), np.min(y))
     (bottomx, bottomy) = (np.max(x), np.max(y))
-    Cropped = gray[topx:bottomx + 1, topy:bottomy + 1]
+    Cropped = gray[topx : bottomx + 1, topy : bottomy + 1]
 
-    license_plate = pytesseract.image_to_string(Cropped, config='--psm 11')
+    license_plate = pytesseract.image_to_string(Cropped, config="--psm 11")
 
     # This block illustrate image and cropped image
     img = cv2.resize(img, (500, 300))
@@ -115,41 +128,48 @@ def number_finder(image_name: str):
 
     img_name = image_name.split(check_slash())[-1]
 
-    filename_responsed = f'responsed_images{check_slash()}responsed_{img_name}'
+    filename_responsed = f"responsed_images{check_slash()}responsed_{img_name}"
     cv2.imwrite(filename_responsed, img)
 
-    filename_cropped = f'cropped_images{check_slash()}cropped_{img_name}'
+    filename_cropped = f"cropped_images{check_slash()}cropped_{img_name}"
     cv2.imwrite(filename_cropped, Cropped)
 
     license_plate = license_plate.strip()
-    return (license_plate)
-
+    return license_plate
 
 
 def save_photo(path_to_folder: str, image):
-    with open(f'{path_to_folder}/{image.name}', 'wb+') as destination:
+    with open(f"{path_to_folder}/{image.name}", "wb+") as destination:
         for chunk in image.chunks():
             destination.write(chunk)
 
 
 def download_file():
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    filename = 'res_rec.json'
-    filepath = BASE_DIR + '/license_recognition/static/json/' + filename
-    path = open(filepath, 'r', encoding="utf-8",)
+    filename = "res_rec.json"
+    filepath = BASE_DIR + "/license_recognition/static/json/" + filename
+    path = open(
+        filepath,
+        "r",
+        encoding="utf-8",
+    )
     mime_type, _ = mimetypes.guess_type(filepath)
     response = HttpResponse(path, content_type=mime_type)
-    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    response["Content-Disposition"] = "attachment; filename=%s" % filename
     return response
 
 
 def json_save_one(lic_plate, region, owner):
-    with open('license_recognition/static/json/res_rec.json', encoding='utf-8') as file_json:
+    with open(
+        "license_recognition/static/json/res_rec.json", encoding="utf-8"
+    ) as file_json:
         data = json.load(file_json)
-    data['lic_plate'] = lic_plate
-    data['region'] = region
-    data['owner'] = owner
-    with open('license_recognition/static/json/res_rec.json', 'w', encoding='utf-8') as file_json:
+    data["lic_plate"] = lic_plate
+    data["region"] = region
+    data["owner"] = owner
+    with open(
+        "license_recognition/static/json/res_rec.json", "w", encoding="utf-8"
+    ) as file_json:
         json.dump(data, file_json, indent=4, ensure_ascii=False)
 
 

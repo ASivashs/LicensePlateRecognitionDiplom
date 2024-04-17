@@ -31,19 +31,35 @@ class WhiteList(models.Model):
 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    user_white_list = models.ManyToManyField(WhiteList, verbose_name="User \"White list\"", blank=True, null=True)
-    user_license_plate = models.ManyToManyField(LicensePlateList, verbose_name="User license plate", blank=True, null=True)
+    user_white_list = models.ManyToManyField(
+        WhiteList, verbose_name='User "White list"', blank=True, null=True
+    )
+    user_license_plate = models.ManyToManyField(
+        LicensePlateList, verbose_name="User license plate", blank=True, null=True
+    )
     notifications_about_new_features = models.BooleanField(
-        verbose_name="Notification about new features", default=False, blank=True, null=True
+        verbose_name="Notification about new features",
+        default=False,
+        blank=True,
+        null=True,
     )
     notifications_when_my_license_plate_on_photo = models.BooleanField(
-        verbose_name="Notification when my license plate on photo", default=False, blank=True, null=True
+        verbose_name="Notification when my license plate on photo",
+        default=False,
+        blank=True,
+        null=True,
     )
     notifications_when_license_from_white_list_on_photo = models.BooleanField(
-        verbose_name="Notification when license plate from \"White list\" on photo", default=False, blank=True, null=True
+        verbose_name='Notification when license plate from "White list" on photo',
+        default=False,
+        blank=True,
+        null=True,
     )
     notifications_when_unfamiliar_license_on_photo = models.BooleanField(
-        verbose_name="Notification when unfamiliar license plate on photo", default=False, blank=True, null=True
+        verbose_name="Notification when unfamiliar license plate on photo",
+        default=False,
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
