@@ -83,7 +83,8 @@ DATABASES = {
         "NAME": "haidisiz",
         "USER": "haidisiz",
         "PASSWORD": "e0Y55HVL2OfnKaOIzRFY-vJQ_snKQ1fu",
-        "HOST": "snuffleupagus.db.elephantsql.com",
+        # "HOST": "snuffleupagus.db.elephantsql.com",
+        "HOST": "127.0.0.1:5432",
     }
 }
 
